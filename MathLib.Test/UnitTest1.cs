@@ -28,5 +28,12 @@ namespace MathLib.Test
             String s = 100.ToWords();
             Assert.AreEqual(s, "one hundred");
         }
+
+
+        [TestMethod]
+        public void EnumLanguageTest()
+        {
+            Assert.AreEqual(0, (int)T3.CellValue.None);
+        }
     }
 }
