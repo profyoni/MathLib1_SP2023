@@ -10,7 +10,6 @@
         {
             return CellValue.None;
         }
-
         public CellValue GetPlayer()
         {
             return CellValue.None;
