@@ -29,6 +29,18 @@ namespace MathLib.Test
             Assert.AreEqual(s, "one hundred");
         }
 
+        
+        [TestMethod]
+        public void ExtTests()
+        {
+            String s = Gender.Male.Clothing();
+            Assert.AreEqual("pants", s);
+        }
+        class Person // trivially simple to store enums in db
+        {
+            private String firstName, lasteName;
+            private Gender g;
+        }
 
         [TestMethod]
         public void EnumLanguageTest()
