@@ -81,6 +81,23 @@ namespace MathLib
             return new Fraction(-a.Numerator,
                 a.Denominator);
         }
+
+        public static implicit operator Fraction(int x)
+        {
+            return new Fraction(x);
+        }
+
+        //lossy op
+        public static explicit operator Fraction(float x)
+        {
+            const int accuracy = 1_000_000;
+            return new Fraction(
+                (int)(x * accuracy), accuracy);
+        }
+        public static implicit operator float(Fraction x)
+        {
+            return (float)x.Numerator / x.Denominator;
+        }
     }
 
     // properties are methods disguised as Fields

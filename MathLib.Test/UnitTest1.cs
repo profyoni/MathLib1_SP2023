@@ -88,6 +88,33 @@ namespace MathLib.Test
         }
 
         [TestMethod]
+        public void CastOperatorOverloading()
+        {
+            Fraction f1 = new Fraction(3, 4);
+            f1 = 8;
+            f1.Numerator.Should().Be(8);
+            f1.Denominator.Should().Be(1);
+        }
+
+        [TestMethod]
+        public void FloatCastOperatorOverloading()
+        {
+            const float PI_FLOAT = (float)Math.PI;
+            Fraction f1 = (Fraction) PI_FLOAT;
+            f1.Numerator.Should().Be(3_141_592);
+            f1.Denominator.Should().Be(1_000_000);
+            ((float)f1).Should().NotBe((float)Math.PI);
+        }
+
+        [TestMethod]
+        public void OperatorOverloading2()
+        {
+            Fraction f = 1 + 3;
+            f = f * 7;
+            f = 5 * f * f;
+        }
+
+        [TestMethod]
         public void Props()
         {
             Person p = new Person(){FirstName = "Bill", LastName = "Gold"};
