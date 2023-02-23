@@ -73,10 +73,20 @@ public class MethodLib2
     {
         return (1, "one", 1.0);
     }
-
+    
     public static dynamic Foo7()
     {
-        return new {X=1,Y="one",Z=1.0};
+        return new { X = 1, Y = "one", Z = 1.0 };
+    }
+
+    // delegate type
+    public delegate void MethodTypeThatTakesNoArgsAndReturnsVoid();
+    public static void executeManyTimes(
+        int times, 
+        MethodTypeThatTakesNoArgsAndReturnsVoid action)
+    {
+        for (int i=0;i<times;i++)
+            action();
     }
 
 }

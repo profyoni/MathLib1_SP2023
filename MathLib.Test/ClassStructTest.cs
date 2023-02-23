@@ -160,5 +160,57 @@ public class ClassStructTest
         var q2 = MethodLib2.Foo7();
         q2["Y"].Should().Be("one");
     }
+
+    [TestMethod]
+    public void Coalesce()
+    {
+        string firstName = null,
+            lastName = "Jones",
+            address1 = null,
+            address2 = "Flushing, NY 11367";
+
+        //string labelledAddress = (firstName ?? "") + 
+        //                         (lastName ?? "") + "\n" 
+        //                         + (address1 ?? "") + (address2 ?? "");
+        //labelledAddress.Should().Be("");
+
+        // string interpoltaion
+        int age = 87;
+        decimal salary = 50_000;
+        var sentence = $"{lastName} who is {age} years old, has a salary of {salary:C}";
+        sentence.Should().Be("Jones who is 87 years old, has a salary of $50,000.00");
+        
+        // verbatim string
+        var directory = "C:\\Home\\John\\Photos";
+        directory.Length.Should().Be(19);
+        string url = "http:\\\\www.example.com\\Folder1\\Folder2\\doc.html";
+
+        directory = @"C:\Home\John\Photos";
+        url = @"http:\\www.example.com\Folder1\Folder2\doc.html
+line 2
+line 3";
+        url.Should().Contain("\n");
+        //string salutation = "Dear {(firstName ?? "" + lastName)}" + ;
+
+        // ?? ??=
+        lastName ??= firstName;
+        lastName.Should().NotBeNull();
+    }
+
+    // Java Checked Exceptions = IOException, cannot protect against (do not inherit from RunTimeException
+    // Catch or Declare "throws"
+    // Unchecked = you can check for and they really shouldnt be in good code (do inherit from RunTimeException
+
+    // C# you can and should catch all kinds of excdeptions (no distinction between 
+    [TestMethod]
+    public void delegates()
+    {
+        // nullables
+        int? x = 9;
+        x = null;
+
+        MethodLib2.executeManyTimes(100, Console.WriteLine);
+
+    }
 }
 
