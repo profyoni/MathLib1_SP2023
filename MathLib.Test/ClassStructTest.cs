@@ -1,5 +1,9 @@
-﻿using System.Runtime.InteropServices.JavaScript;
+﻿using System.Globalization;
+using System.Linq.Expressions;
+using System.Runtime.InteropServices.JavaScript;
+using System.Text;
 using FluentAssertions;
+using Humanizer;
 
 namespace MathLib.Test;
 
@@ -76,5 +80,85 @@ public class ClassStructTest
         a.Should().Be(100);
     }
 
+    [TestMethod]
+    public void CultureInfo()
+    {
+        CultureInfo ci = new CultureInfo("en-US");
+        var s = 5.ToWords(ci);
+        s.Should().Be("five");
 
+
+        CultureInfo ci2 = new CultureInfo("he-IL");
+        var s2 = 5.ToWords(ci2);
+        s2.Should().Be("חמש");
+    }
+
+    // Pass A Value vs Pass A Reference
+    // identical to assignment
+
+    [TestMethod]
+    public void PassAndAssignment()
+    {
+        int x = 3, y = x;
+        y = 4;
+        x.Should().Be(3);
+
+        MethodLib2.Foo(x);
+        x.Should().Be(3);
+
+        StringBuilder sb1 = new StringBuilder(), sb2 = sb1;
+        sb2.Append("Q");
+        sb1.ToString().Should().Be("Q");
+
+        MethodLib2.Foo(sb1);
+        sb1.ToString().Should().Be("QQ");
+
+        MethodLib2.Foo2(sb1);
+        sb1.ToString().Should().Be("QQ");
+
+
+    }
+
+    [TestMethod]
+    public void Bar()
+    {
+        StringBuilder sb1 = new StringBuilder(), sb2 = sb1;
+        sb2.Append("Q");
+
+        MethodLib2.Foo3(ref sb1);
+        sb1.ToString().Should().Be("");
+
+        int x = 3;
+        MethodLib2.Foo3(ref x);
+        x.Should().Be(4);
+
+        ref int z = ref x;
+        z = 9;
+        x.Should().Be(9);
+
+        MethodLib2.Foo3(ref x);
+    }
+
+    [TestMethod]
+    public void Out()
+    {
+        int z=9;
+        MethodLib2.Foo4(out z);
+        z.Should().Be(4);
+
+        String s = "99";
+        int v;
+        bool success = Int32.TryParse(s, out v);
+        if (success)
+        {
+            v.Should().Be(99);
+        }
+
+        var q = MethodLib2.Foo6();
+        q.Item2.Should().Be("one");
+
+        var q2 = MethodLib2.Foo7();
+        q2["Y"].Should().Be("one");
+    }
 }
+

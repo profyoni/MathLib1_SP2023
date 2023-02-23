@@ -1,4 +1,6 @@
-﻿namespace MathLib;
+﻿using System.Text;
+
+namespace MathLib;
 
 public class ClassStruct
 {
@@ -34,6 +36,47 @@ public class MethodLib2
     {
         x.Value *= 100;
         return x;
+    }
+
+    public static void Foo(int y)
+    {
+        y = 4;
+    }
+    public static void Foo(StringBuilder y)
+    {
+        y.Append("Q");
+    }
+
+    public static void Foo2(StringBuilder y)
+    {
+        y = new StringBuilder();
+    }
+    public static void Foo3(ref StringBuilder y)
+    {
+        y = new StringBuilder();
+    }
+    public static void Foo3(ref int y)
+    {
+        y = 4;
+    }
+
+    public static void Foo4(out int y)
+    {
+        y = 4;
+    }
+    public static void Foo5(in int y)
+    {
+        Console.WriteLine(y);
+        int x = y * y;
+    }
+    public static (int, string, double) Foo6()
+    {
+        return (1, "one", 1.0);
+    }
+
+    public static dynamic Foo7()
+    {
+        return new {X=1,Y="one",Z=1.0};
     }
 
 }
