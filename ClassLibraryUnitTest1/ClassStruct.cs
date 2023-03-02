@@ -79,14 +79,41 @@ public class MethodLib2
         return new { X = 1, Y = "one", Z = 1.0 };
     }
 
+    public  int FooFooBar(string q, string w)
+    {
+        return 1;
+
+    }
+
     // delegate type
-    public delegate void MethodTypeThatTakesNoArgsAndReturnsVoid();
+    public delegate void DelegateTypeThatTakesNoArgsAndReturnsVoid();
+    public delegate int DelegateTypeThatTakes2StringArgsAndReturnsInt(string a, string b);
+    public delegate (int, double) DelegateTypeThatTakesOneDoubleArgsAndReturnsATupleOfIntAndDouble(double d);
+
+    
+    // delegate variable
+    // A varibale of the delegate type
+    private DelegateTypeThatTakes2StringArgsAndReturnsInt qqq;
+
+    // delegate method
+    public void Temp1()
+    {
+        // setting delegate variable to equal a method
+        qqq = FooFooBar;
+
+        //calling the delgate method
+        qqq("a","w");
+
+
+    }
     public static void executeManyTimes(
-        int times, 
-        MethodTypeThatTakesNoArgsAndReturnsVoid action)
+        int times,
+        DelegateTypeThatTakesNoArgsAndReturnsVoid action)
     {
         for (int i=0;i<times;i++)
             action();
+
+
     }
 
 }

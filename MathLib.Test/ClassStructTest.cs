@@ -142,7 +142,7 @@ public class ClassStructTest
     [TestMethod]
     public void Out()
     {
-        int z=9;
+        int z = 9;
         MethodLib2.Foo4(out z);
         z.Should().Be(4);
 
@@ -156,9 +156,14 @@ public class ClassStructTest
 
         var q = MethodLib2.Foo6();
         q.Item2.Should().Be("one");
+    }
 
-        var q2 = MethodLib2.Foo7();
-        q2["Y"].Should().Be("one");
+    [TestMethod]
+        public void Dynamic()
+        {
+        dynamic q2 = MethodLib2.Foo7();
+        string p1 = q2.Y;
+        p1.Should().Be("one");
     }
 
     [TestMethod]
@@ -212,5 +217,66 @@ line 3";
         MethodLib2.executeManyTimes(100, Console.WriteLine);
 
     }
+    public delegate double MathFunction(double a);
+
+    [TestMethod]
+    public void MathFuncs()
+    {
+        MathFunction g = Math.Sin;
+        g(Math.PI/4).Should().BeApproximately(.7071, .001);
+        g = Math.Asin;
+        g(.7071).Should().BeApproximately(Math.PI / 4, .0001);
+
+        g =  d => d*d; 
+        g(9).Should().BeApproximately(81, .0001);
+    }
+    
+    bool IsEvenLength(string a)
+    {
+        //throw new ArgumentOutOfRangeException();
+        return a.Length % 2 == 0;
+
+    }
+    bool IsEven(int a)
+    {
+        return a % 2 == 0;
+
+    }
+
+    [TestMethod]
+    public void LINQ() // Language integrated Queries
+    {
+        var list = new []{ 7, 3, 9, 23, 96 };
+
+        var evenNumbers = list.Where(IsEven);
+
+        evenNumbers.Should().Contain(96);
+
+
+        var list2 = new[] { "erte", "iiu", "opoy"};
+
+        var evenStrings = list2.Where(IsEvenLength);
+
+        evenStrings.Should().Contain("erte");
+        evenStrings.Should().Contain("erte");
+
+        evenStrings = list2.Where(s => s.Length%2 == 0);
+
+        evenStrings.Should().Contain("erte");
+    }
+
+    // LINQ uses "deferred execution" ; nothing gets executed until it is ACTUALLY needed
+    // AND Repeatedly executed each time 
+    [TestMethod]
+    public void LINQ2()
+    {
+        var list2 = new[] { "erte", "iiu", "opoy" };
+
+        var evenStrings = list2.Where(IsEvenLength);
+
+
+    }
+
+
 }
 
